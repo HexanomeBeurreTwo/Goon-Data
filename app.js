@@ -1,33 +1,39 @@
-"use strict";
+var fs = require('fs');
 
-var fs      = require('fs');
-var express = require('express');
-var Sequelize = require('sequelize');
+var getfacebookdata = require('./client/client.getfacebookdata.js');
+var getgrandlyondata = require('./client/client.getgrandlyondata.js');
+var normalize = require('./controllers/controller.normalizedata.js');
 
-var routes = require('./routes/routes.js');
+var endpointsConfig = JSON.parse(fs.readFileSync('endpoints.config.json', 'utf8'));
+
+// GRAND LYON
+var grandsLyonEndPoint = endpointsConfig.grandsLyonEndPoint;
+
+// FACEBOOK
+var fbEndPoint = endpointsConfig.fbEventEndPoint;
+fbEndPoint.distance = "1000";
+fbEndPoint.sort="venue";
 
 
-// *** Config Express *** //
+function logActivity(normilizedData)
+{	
+	normilizedData.forEach(function(item, index) {
+	  console.log( JSON.stringify(item) +" \n\n");
+	});
+	
+	console.log( normilizedData.length +" Found." );
+}
 
-var app = express();
-// app.engine('html', require('ejs').renderFile);
-// app.set('view engine', 'html');
 
-// *** main routes *** //
-app.use('/', routes);
+getgrandlyondata(grandsLyonEndPoint, function(statusCode,data)
+{
+	var normilizedEvent = normalize[0](data);
+	logActivity(normilizedEvent);
+});  
 
-/* Avoid CROSS Origin request */
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+
+getfacebookdata(fbEndPoint,function(data)
+{
+	var normilizedEvent = normalize[1](data);
+	logActivity(normilizedEvent);
 });
-
-var server = app.listen(process.env.PORT || 3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('Goon server listening at http://%s:%s', host, port);
-});
-
-module.exports = server;
