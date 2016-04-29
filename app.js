@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-var getfacebookdata = require('./client/client.getfacebookdata.js');
-var getgrandlyondata = require('./client/client.getgrandlyondata.js');
+var getFacebookEventsData = require('./client/client.getfacebookdata.js');
+var getGrandLyondata = require('./client/client.getgrandlyondata.js');
 var normalize = require('./controllers/controller.normalizedata.js');
 
 var endpointsConfig = JSON.parse(fs.readFileSync('endpoints.config.json', 'utf8'));
@@ -24,16 +24,41 @@ function logActivity(normilizedData)
 	console.log( normilizedData.length +" Found." );
 }
 
-
-getgrandlyondata(grandsLyonEndPoint, function(statusCode,data)
+function lunchUpdateData(done)
 {
-	var normilizedEvent = normalize[0](data);
-	logActivity(normilizedEvent);
-});  
+	getGrandLyondata(grandsLyonEndPoint, function(statusCode,data)
+	{
+		var normilizedEvent = normalize[0](data);
+		logActivity(normilizedEvent);
+		console.log('Facebook Event Data Updated at : ' + new Date());
+		done();
+	});  
 
 
-getfacebookdata(fbEndPoint,function(data)
-{
-	var normilizedEvent = normalize[1](data);
-	logActivity(normilizedEvent);
-});
+	getFacebookEventsData(fbEndPoint,function(data)
+	{
+		var normilizedEvent = normalize[1](data);
+		logActivity(normilizedEvent);
+		console.log('GrandLyon Data Updated at : ' + new Date());
+		done();
+	});
+	
+}
+
+
+var CronJob = require('cron').CronJob;
+var zone = "Europe/Paris";
+var job = new CronJob('*/10 * * * * *', function() {
+  /* runs once at the specified date. */
+	lunchUpdateData(function()
+	{
+		console.log("Notify Goon Server ?")
+	});
+
+    // Notify Goon Server the job is done
+  }, function () {
+    /* This function is executed when the job stops */
+  },
+  true, /* Start the job right now */
+  zone /* Time zone of this job. */
+);
