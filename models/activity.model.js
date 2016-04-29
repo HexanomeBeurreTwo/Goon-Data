@@ -33,13 +33,19 @@ module.exports = function(sequelize, DataTypes) {
     opening_hours: {
       type: DataTypes.ARRAY(DataTypes.INTEGER)
     },
-    ActivityTypeId: {
-      type: DataTypes.STRING
+    type: {
+      type:   DataTypes.ENUM,
+      values: ['PATRIMOINE_CULTUREL', "RESTAURATION", "DEGUSTATION", "COMMERCE_ET_SERVICE", "HEBERGEMENT_LOCATIF", "HEBERGEMENT_COLLECTIF", "HOTELLERIE"],
+    },
+    source: {
+      type:   DataTypes.STRING,
+    },
+    idSource: {
+      type:   DataTypes.DECIMAL,
     },
   }, {
     classMethods: {
       associate: function(models) {
-        Activity.hasOne(models.ActivityType, { foreignKey: 'ActivityTypeId' });
         Activity.belongsToMany(models.Channel, { through: 'ChannelActivity', foreignKey: 'ChannelId', as: 'Channels' });
       }
     }
