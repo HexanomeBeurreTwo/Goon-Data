@@ -1,0 +1,23 @@
+{
+	"fbconfig" : { 
+		"appID": "484455431745415",
+		"secret": "0b6361876cc67c2a68d4dbe5545db0b1",
+		"access_token": "484455431745415|mwupOvSb1Ks9yl7M_COOXTEyjj0"
+	},
+	"grandsLyonEndPoint" :{ 
+		"host": "download.data.grandlyon.com",
+		"protocol": "https:",
+		"path": "/wfs/rdata?SERVICE=WFS&VERSION=2.0.0&outputformat=GEOJSON&maxfeatures=30&request=GetFeature&typename=sit_sitra.sittourisme&SRSNAME=urn:ogc:def:crs:EPSG::4326",
+		"headers": {
+		   "Content-Type": "application/json"
+		}
+	},
+	"fbEventEndPoint" : {		
+		"lat": "45.763085",
+		"lng": "4.869695",
+		"distance": "1000",
+		"sort":"popolarity",
+		"access_token": "484455431745415|mwupOvSb1Ks9yl7M_COOXTEyjj0"
+	}
+}
+ 

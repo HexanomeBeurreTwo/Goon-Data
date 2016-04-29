@@ -1,0 +1,16 @@
+{
+	"id":"",
+	"name":"",
+	"type":"",
+	"tags":[],
+	"adress":"",
+	"coordinate":["lngitude","laltitude"],
+	"date_start":"",
+	"date_end":"",
+	"continous":false,
+	"description":"",
+	"link":"",
+	"picture":"",
+	"phoneNumber":""
+	
+}

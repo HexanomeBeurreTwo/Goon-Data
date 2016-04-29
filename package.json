@@ -1,38 +1,27 @@
 {
-  "name": "goon-server",
+  "name": "goon-data",
   "version": "0.0.1",
   "main": "app.js",
+  "description": "Pulls interesting activities from facebook and GrandSon endpoints. ",
+  "keywords": ["Facebook","events","event","search","location","microservice","backend","app"],
+  "version": "0.4.2",
+  "private": false,
   "scripts": {
     "start": "node app.js",
-    "test": "mocha test/user.test.js"
+    "test": "mocha test/test.js"
   },
-  "keywords": [
-    "lyon",
-    "city",
-    "discovery",
-    "urban",
-    "location"
-  ],
-  "author": "HexanomeBeurreTwo",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "ejs": "^2.4.1",
-    "express": "4.13.3",
-    "fs": "0.0.2",
-    "pg": "^4.5.3",
-    "pg-hstore": "^2.3.2",
-    "request": "^2.65.0",
-    "sequelize": "^3.22.0",
-    "sequelize-cli": "^2.4.0"
+    "bluebird": "^2.10.0",
+    "debug": "~2.2.0",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "request-promise": "^0.4.3"
   },
-  "engines": {
-    "node": "5.10.1"
-  },
-  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:HexanomeBeurreTwo/Goon-Server.git"
+    "url": "git@github.com:HexanomeBeurreTwo/Goon-Data.git"
   },
+  "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
