@@ -25,15 +25,30 @@ function logActivity(normilizedData)
 }
 
 
-getgrandlyondata(grandsLyonEndPoint, function(statusCode,data)
-{
-	var normilizedEvent = normalize[0](data);
-	logActivity(normilizedEvent);
-});  
 
 
-getfacebookdata(fbEndPoint,function(data)
-{
-	var normilizedEvent = normalize[1](data);
-	logActivity(normilizedEvent);
-});
+var CronJob = require('cron').CronJob;
+var zone = "Europe/Paris";
+var job = new CronJob('*/20 * * * * *', function() {
+  /* runs once at the specified date. */
+  getgrandlyondata(grandsLyonEndPoint, function(statusCode,data)
+	{
+		var normilizedEvent = normalize[0](data);
+		logActivity(normilizedEvent);
+	});  
+
+
+	getfacebookdata(fbEndPoint,function(data)
+	{
+		var normilizedEvent = normalize[1](data);
+		logActivity(normilizedEvent);
+	});
+
+	console.log("HHHHHHEEEEEELLLLLLLLLLO");
+    // Notify Goon Server the job is done
+  }, function () {
+    /* This function is executed when the job stops */
+  },
+  true, /* Start the job right now */
+  zone /* Time zone of this job. */
+);
