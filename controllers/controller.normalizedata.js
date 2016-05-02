@@ -1,5 +1,7 @@
 var tagger = require('./controller.tagger.js');
 
+var maxLength = 255;
+
 function formatDate(dateStr)
 // from "2016-05-26T09:00:00+0200" to "2016-05-26 07:00:00"
 {
@@ -29,6 +31,9 @@ function normalizedActivityEventFB(JsonEvents)
 	  activity.temporary = true;
 	  activity.link = item.eventLink;
 	  activity.description = item.eventDescription;
+	  if (activity.description.length > maxLength) {
+	  	activity.description = truncate(activity.description);
+	  }
 	  activity.phoneNumber = null;	  
 	  activity.picture = item.eventProfilePicture;
 	  activity.source = "facebook";
@@ -55,6 +60,9 @@ function normalizedActivityGL(JsonEvents)
 	  activity.temporary = false;
 	  activity.link = item.properties.siteweb;
 	  activity.description = item.properties.type_detail+"\n"+item.properties.tarifsenclair+"\n"+item.properties.ouverture;	
+	  if (activity.description.length > maxLength) {
+	  	activity.description = truncate(activity.description);
+	  }
 	  activity.phoneNumber = item.properties.telephone;
 	  activity.picture = null;
 	  activity.source = "grandlyon";
@@ -64,6 +72,16 @@ function normalizedActivityGL(JsonEvents)
 	return activities;
 }
 
+function truncate(trunc) {
+	/* Truncate the content of the descritpion, then go back to the end of the
+       previous word to ensure that we don't truncate in the middle of
+       a word */
+    trunc = trunc.substring(0, maxLength);
+    trunc = trunc.replace(/\w+$/, '');
+
+    trunc += '...';
+    return trunc;
+}
  
 module.exports = [normalizedActivityGL,normalizedActivityEventFB];
 
