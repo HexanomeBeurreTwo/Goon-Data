@@ -70,10 +70,12 @@ function spotlightRequest(input,callback)
 function extracte_tags(SpotlightRespense)
 {
 	var tags = [];
-	SpotlightRespense.Resources.forEach(function(item, index) 
-	{
-		tags.push(item['@surfaceForm']);
-	});
+	if (SpotlightRespense.Resources) {
+		SpotlightRespense.Resources.forEach(function(item, index) 
+		{
+			tags.push(item['@surfaceForm']);
+		});
+	}
 	return tags;
 }
 
@@ -89,16 +91,17 @@ function updateTagsActivity(activity)
 		}else {
 			activity.tags = [];
 		}
-		console.log(actvity);
+		console.log(activity);
 	});
 		
 }    
 
 
 // TEST
+// var input = "Formation vie de couple la gestion des conflits, \nInscription:\nwww.weezevent.com/ujm";
 // var actvity = {
-	// description : input,
-	// tags : []
+// 	description : input,
+// 	tags : []
 // }
 // updateTagsActivity(actvity);
 

@@ -20,7 +20,6 @@ function normalizedActivityEventFB(JsonEvents)
 	  activity.name = item.eventName;
 	  activity.type = "EVENT" ;
 	  //activity.tags = [];
-	  tagger.putTags(activity);
 	  activity.adress = item.venueLocation.street + " " + item.venueLocation.street + " " + item.venueLocation.city + " " + item.venueLocation.zip + " " + item.venueLocation.country ; 
 	  activity.latitude = item.venueLocation.latitude;
 	  activity.longitude = item.venueLocation.longitude;
@@ -31,6 +30,8 @@ function normalizedActivityEventFB(JsonEvents)
 	  activity.temporary = true;
 	  activity.link = item.eventLink;
 	  activity.description = item.eventDescription;
+	  if(activity.description.length > 0)
+	  	tagger.putTags(activity);
 	  if (activity.description.length > maxLength) {
 	  	activity.description = truncate(activity.description);
 	  }
