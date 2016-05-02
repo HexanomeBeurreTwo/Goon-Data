@@ -1,0 +1,26 @@
+{
+  "name": "Goon-Data",
+  "scripts": {
+  },
+  "env": {
+    "DATABASE_HOST": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
