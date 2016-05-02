@@ -11,7 +11,7 @@ var http = require('http');
 var confidence='0.35';
 var support ='0.0';
 
-function spotlightRequest(input,cb) 
+function spotlightRequest(input,callback) 
 {
     var post_data = querystring.stringify({
         'text' : input,
@@ -20,7 +20,7 @@ function spotlightRequest(input,cb)
     });
 	
   // Spotlight end point
-  var post_options = {
+  var spotlight_config = {
       host: 'spotlight.sztaki.hu',
       port: '2225',
       path: '/rest/annotate',
@@ -31,7 +31,7 @@ function spotlightRequest(input,cb)
       }
   };
   // Set up the request
-  var post_req = http.request(post_options, function(res) {
+  var post_req = http.request(spotlight_config, function(res) {
     res.setEncoding('utf8');
 	res.on('error', function(e) {
 	  var response={};
@@ -40,7 +40,7 @@ function spotlightRequest(input,cb)
 		'error':e,
 		'response':response
 	  }
-	  cb(output);
+	  callback(output);
 	});
 	var body='';
 	res.on('data', function (chunk) {
@@ -58,7 +58,7 @@ function spotlightRequest(input,cb)
 			'error':0,
 			'response':response
 		}
-		cb(output);
+		callback(output);
 	});
   });
   // post the data
@@ -74,10 +74,11 @@ function spotlightRequest(input,cb)
 function extracte_tags(SpotlightRespense)
 {
 	var tags = [];
-	SpotlightRespense.Resources.forEach(function(item, index) 
-	{
-		tags.push(item.@surfaceForm);
-	});
+
+	// SpotlightRespense['Resources'].forEach(function(item, index) 
+	// {
+	// 	tags.push(item['@surfaceForm']);
+	// });
 	return tags;
 }
 
@@ -89,8 +90,9 @@ function updateTagsActivity(activity)
 	{
 		if(!SpotlightOutput.error)
 		{
+			console.error(SpotlightOutput);
 			activity.tags =  extracte_tags(SpotlightOutput.response);
-		}else {
+		}	else {
 			activity.tags = [];
 		}
 	});
