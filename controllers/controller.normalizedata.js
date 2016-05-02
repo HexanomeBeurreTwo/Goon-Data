@@ -1,6 +1,4 @@
-var fs = require('fs');
-
-// var activityModel = JSON.parse(fs.readFileSync('../wiki/activityModel.json', 'utf8'));
+var tagger = require('./controller.tagger.js');
 
 function formatDate(dateStr)
 // from "2016-05-26T09:00:00+0200" to "2016-05-26 07:00:00"
@@ -19,7 +17,8 @@ function normalizedActivityEventFB(JsonEvents)
 	  var activity = {};//activityModel;
 	  activity.name = item.eventName;
 	  activity.type = "EVENT" ;
-	  activity.tags = [];
+	  //activity.tags = [];
+	  tagger.putTags(activity);
 	  activity.adress = item.venueLocation.street + " " + item.venueLocation.street + " " + item.venueLocation.city + " " + item.venueLocation.zip + " " + item.venueLocation.country ; 
 	  activity.latitude = item.venueLocation.latitude;
 	  activity.longitude = item.venueLocation.longitude;

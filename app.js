@@ -32,10 +32,12 @@ function launchUpdateData(done)
 	getGrandLyondata(grandsLyonEndPoint, function(statusCode,data)
 	{
 		var normilizedEvent = normalize[0](data);
+
 		// logActivity(normilizedEvent);
 		insertion.insertAllActivities(normilizedEvent);
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('GrandLyon Data Updated at : ' + new Date());
+
 		done();
 	});  
 
@@ -43,10 +45,12 @@ function launchUpdateData(done)
 	getFacebookEventsData(fbEndPoint,function(data)
 	{
 		var normilizedEvent = normalize[1](data);
+
 		// logActivity(normilizedEvent);
 		// insertion.insertAllActivities(normilizedEvent);
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('Facebook Event Data Updated at : ' + new Date());
+
 		done();
 	});
 }
