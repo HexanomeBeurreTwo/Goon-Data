@@ -4,6 +4,7 @@ var getFacebookEventsData = require('./client/client.getfacebookdata.js');
 var getGrandLyondata = require('./client/client.getgrandlyondata.js');
 var normalize = require('./controllers/controller.normalizedata.js');
 var insertion = require('./controllers/controller.insert.js');
+var cron = require('./controllers/controller.cron.js');
 
 var endpointsConfig = JSON.parse(fs.readFileSync('endpoints.config.json', 'utf8'));
 
@@ -47,28 +48,15 @@ function launchUpdateData(done)
 		console.log('GrandLyon Data Updated at : ' + new Date());
 		done();
 	});
-	
 }
 
-launchUpdateData(function()
-{
-	console.log("Notify Goon Server ?");
-	return;
-});
+function main() {
+	launchUpdateData(function()
+	{
+		console.log("Notify Goon Server ?");
+		return;
+	});
+}
 
-// var CronJob = require('cron').CronJob;
-// var zone = "Europe/Paris";
-// var job = new CronJob('*/10 * * * * *', function() {
-//   /* runs once at the specified date. */
-// 	launchUpdateData(function()
-// 	{
-// 		console.log("Notify Goon Server ?")
-// 	});
-
-//     // Notify Goon Server the job is done
-//   }, function () {
-//     /* This function is executed when the job stops */
-//   },
-//   true, /* Start the job right now */
-//   zone /* Time zone of this job. */
-// );
+// Replace with true for cron job
+cron.cronJob(false, main);
