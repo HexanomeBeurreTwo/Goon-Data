@@ -1,10 +1,18 @@
 {
   "name": "goon-data",
-  "version": "0.0.1",
+  "version": "0.4.2",
   "main": "app.js",
   "description": "Pulls interesting activities from facebook and GrandSon endpoints. ",
-  "keywords": ["Facebook","events","event","search","location","microservice","backend","app"],
-  "version": "0.4.2",
+  "keywords": [
+    "Facebook",
+    "events",
+    "event",
+    "search",
+    "location",
+    "microservice",
+    "backend",
+    "app"
+  ],
   "private": false,
   "scripts": {
     "start": "node app.js",
@@ -12,10 +20,13 @@
   },
   "dependencies": {
     "bluebird": "^2.10.0",
+    "cron": "^1.1.0",
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "morgan": "~1.6.1",
-    "request-promise": "^0.4.3"
+    "pg": "^4.5.5",
+    "request-promise": "^0.4.3",
+    "sequelize": "^3.22.0"
   },
   "repository": {
     "type": "git",
