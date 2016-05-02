@@ -18,7 +18,7 @@ function normalizedActivityEventFB(JsonEvents)
 	JsonEvents.events.forEach(function(item, index) {
 	  var activity = {};//activityModel;
 	  activity.name = item.eventName;
-	  activity.type = "event" ;
+	  activity.type = "EVENT" ;
 	  activity.tags = [];
 	  activity.adress = item.venueLocation.street + " " + item.venueLocation.street + " " + item.venueLocation.city + " " + item.venueLocation.zip + " " + item.venueLocation.country ; 
 	  activity.latitude = item.venueLocation.latitude;
