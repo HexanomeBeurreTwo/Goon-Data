@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     type: {
       type:   DataTypes.ENUM,
-      values: ['PATRIMOINE_CULTUREL', "RESTAURATION", "DEGUSTATION", "COMMERCE_ET_SERVICE", "HEBERGEMENT_LOCATIF", "HEBERGEMENT_COLLECTIF", "HOTELLERIE"],
+      values: ["PATRIMOINE_CULTUREL", "RESTAURATION", "DEGUSTATION", "COMMERCE_ET_SERVICE", "HEBERGEMENT_LOCATIF", "HEBERGEMENT_COLLECTIF", "HOTELLERIE", "EQUIPEMENT", "EVENT"],
     },
     source: {
       type:   DataTypes.STRING,
