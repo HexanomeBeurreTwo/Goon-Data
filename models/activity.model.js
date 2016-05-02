@@ -39,9 +39,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     source: {
       type:   DataTypes.STRING,
+      primaryKey: true
     },
     idSource: {
       type:   DataTypes.DECIMAL,
+      primaryKey: true
     },
   }, {
     classMethods: {
