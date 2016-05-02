@@ -92,7 +92,7 @@ function updateTagsActivity(activity)
 		console.log(actvity);
 	});
 		
-}  
+}    
 
 
 // TEST

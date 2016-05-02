@@ -34,7 +34,7 @@ function launchUpdateData(done)
 		var normilizedEvent = normalize[0](data);
 
 		// logActivity(normilizedEvent);
-		insertion.insertAllActivities(normilizedEvent);
+		// insertion.insertAllActivities(normilizedEvent);
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('GrandLyon Data Updated at : ' + new Date());
 
@@ -47,7 +47,7 @@ function launchUpdateData(done)
 		var normilizedEvent = normalize[1](data);
 
 		// logActivity(normilizedEvent);
-		// insertion.insertAllActivities(normilizedEvent);
+		insertion.insertAllActivities(normilizedEvent);
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('Facebook Event Data Updated at : ' + new Date());
 
