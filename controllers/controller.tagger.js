@@ -11,7 +11,8 @@ var http = require('http');
 var confidence='0.35';
 var support ='0.0';
 
-function PostCode(input,cb) {
+function spotlightRequest(input,cb) 
+{
     var post_data = querystring.stringify({
         'text' : input,
         'confidence': confidence,
@@ -64,18 +65,38 @@ function PostCode(input,cb) {
   post_req.write(post_data);
   post_req.end();
 }
-
-
-var input = "President Obama called Wednesday on Congress to extend a tax break for students included in last years economic stimulus package, arguing that the policy provides more generous assistance.";
-PostCode(input,function(output){console.log(output)});
+ 
+// TEST
+//var input = "President Obama called Wednesday on Congress to extend a tax break for students included in last years economic stimulus package, arguing that the policy provides more generous assistance.";
+//spotlightRequest(input,function(output){console.log(output)});
 
 
 function extracte_tags(SpotlightRespense)
 {
 	var tags = [];
-	SpotlightRespense.forEach(Resources)function(item, index) 
+	SpotlightRespense.Resources.forEach(function(item, index) 
 	{
 		tags.push(item.@surfaceForm);
-	}
+	});
 	return tags;
 }
+
+function updateTagsActivity(activity)
+{	
+	//activity.description
+	//activity.tags
+	spotlightRequest(activity.description,function(SpotlightOutput)
+	{
+		if(!SpotlightOutput.error)
+		{
+			activity.tags =  extracte_tags(SpotlightOutput.response);
+		}else {
+			activity.tags = [];
+		}
+	});
+		
+}  
+
+
+module.exports = {putTags:updateTagsActivity};
+
