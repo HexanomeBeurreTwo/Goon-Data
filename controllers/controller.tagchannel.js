@@ -25,6 +25,8 @@ function getActivityById(id, done) {
 	});
 }
 
+module.exports.getActivityById = getActivityById;
+
 function getChannels(done) {
 	models.Channel.findAll()
 	.then(function(channels) {
