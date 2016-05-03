@@ -53,6 +53,7 @@ function launchUpdateData(done)
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('['+normilizedEvent.length+'] Facebook Event Data Updated at : ' + new Date());
 	});
+	done();
 }
 
 function main() {

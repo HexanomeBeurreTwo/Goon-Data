@@ -3,7 +3,7 @@ var models = require('../models/index');
 function getActivities(done) {
 	models.Activity.findAll()
 	.then(function(activities) {
-		console.log("SUCCESS !" + activities.length + " channels founds");
+		// console.log("SUCCESS !" + activities.length + " channels founds");
 		done(activities);
 	})
 	.catch(function(err) {
@@ -15,7 +15,7 @@ function getActivities(done) {
 function getActivityById(id, done) {
 	models.Activity.findById(id)
 	.then(function(activity) {
-		console.log("SUCCESS !" + activity.name + " activity founds");
+		// console.log("SUCCESS !" + activity.name + " activity founds");
 		activity.id = id;
 		done(activity);
 	})
@@ -30,7 +30,7 @@ module.exports.getActivityById = getActivityById;
 function getChannels(done) {
 	models.Channel.findAll()
 	.then(function(channels) {
-		console.log("SUCCESS !" + channels.length + " channels founds");
+		// console.log("SUCCESS !" + channels.length + " channels founds");
 		done(channels);
 	})
 	.catch(function(err) {

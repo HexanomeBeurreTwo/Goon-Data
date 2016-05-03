@@ -75,8 +75,8 @@ function getFbEvents(req, onResult) {
 		
   if (!req.lat || !req.lng || !req.distance || !req.access_token) {
     //res.status(500).send({error: "Please specify the lat, lng, distance and access_token query parameters"});
-	console.log({error: "Please specify the lat, lng, distance and access_token query parameters"});
-	console.log("got :" + JSON.stringify(req));
+	console.error({error: "Please specify the lat, lng, distance and access_token query parameters"});
+	console.error("got :" + JSON.stringify(req));
   } else {
 
     var idLimit = 50, //FB only allows 50 ids per /?ids= call
@@ -198,7 +198,7 @@ function getFbEvents(req, onResult) {
     })
  	.catch(function (e) {
       //res.status(500).send({error: e});
-	  console.log('!! ERROR file getfacebookdata.getFbEvents ' + e);
+	  console.error('!! ERROR file getfacebookdata.getFbEvents ' + e);
     });   
   }
 
