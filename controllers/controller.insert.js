@@ -1,5 +1,6 @@
 
 var models = require('../models/index');
+var tagchannel = require('./controller.tagchannel');
 
 
 function isAllreadyInDB(activity) {  // CF Clean
