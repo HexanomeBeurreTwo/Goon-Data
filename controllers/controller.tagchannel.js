@@ -86,22 +86,25 @@ function matchTags(tagOne, tagTwo) {
 function applyMatching(channels, activity, threshold)	{
 	channels.forEach(function(channel, channelId)	{
 		var channelScore = 0;
-		// Cartesian product between activity's tags and channel's tags
-		channel.tags.forEach(function(channelTag, channelTagIndex)	{
-			if (activity.tags) {
-				activity.tags.forEach(function(activityTag, activityTagIndex)	{
-					if (matchTags(channelTag, activityTag)) { channelScore++;}
-				});
+		if (channel.tags) {
+			// Cartesian product between activity's tags and channel's tags
+			channel.tags.forEach(function(channelTag, channelTagIndex)	{
+				if (activity.tags) {
+					activity.tags.forEach(function(activityTag, activityTagIndex)	{
+						if (matchTags(channelTag, activityTag)) { channelScore++;}
+					});
+				}
+			});
+			if (channelScore/channel.tags.length >= threshold) {
+				console.log("[TAG MATCHING] Association between channel " + channel.name + " and activity " + activity.name + " found.");
+				console.log( JSON.stringify(activity));
+				console.log( JSON.stringify(channel));
+				insertChannelActivity(activity.id, channel.id, channelScore/channel.tags.length);
+			}	else	{
+				console.log("[TAG MATCHING] NO association between channel " + channel.name + " and activity " + activity.name + " found.")
 			}
-		});
-
-		if (channelScore/channel.tags.length >= threshold) {
-			console.log("[TAG MATCHING] Association between channel " + channel.name + " and activity " + activity.name + " found.");
-			console.log( JSON.stringify(activity));
-			console.log( JSON.stringify(channel));
-			insertChannelActivity(activity.id, channel.id, channelScore/channel.tags.length);
 		}	else	{
-			console.log("[TAG MATCHING] NO association between channel " + channel.name + " and activity " + activity.name + " found.")
+			console.warn("Channel[" + channel.id + "] " + channel.name + " do not have tags");
 		}
 	});
 }

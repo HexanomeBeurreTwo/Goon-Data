@@ -61,7 +61,7 @@ function main() {
 		console.log("Notify Goon Server ?");
 		return;
 	});
-	// clean.cleanOldFacebookActivities();
+	clean.cleanOldFacebookActivities();
 }
 
 main();

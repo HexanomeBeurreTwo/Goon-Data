@@ -16,6 +16,7 @@
   "private": false,
   "scripts": {
     "start": "node app.js",
+    "postinstall": "sequelize db:migrate",
     "test": "mocha test/test.js"
   },
   "dependencies": {
