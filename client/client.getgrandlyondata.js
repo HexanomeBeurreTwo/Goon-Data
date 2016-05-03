@@ -8,7 +8,7 @@ function getRessourceJson(options,onResult)
 	var prot = options.protocol == 'https:' ? https : http;
 	var httpclient = prot.request(options, function (res) {
 			
-		console.log(options.host + ':' + res.statusCode);
+		// console.log(options.host + ':' + res.statusCode);
 		res.setEncoding('utf8');
 		
 		var output = '';
@@ -29,7 +29,7 @@ function getRessourceJson(options,onResult)
 	});
 
 	httpclient.on('error', function(e)  {
-		console.log("!! ERROR file 'getgrandlyondata' : " + e.message);
+		console.error("!! ERROR file 'getgrandlyondata' : " + e.message);
 	});
 
 	httpclient.end();

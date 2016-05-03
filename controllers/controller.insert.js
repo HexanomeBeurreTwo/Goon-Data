@@ -15,7 +15,6 @@ function isAllreadyInDB(activity, done) {  // CF Clean
 			done(false);
 		}
 		else	{
-			console.log("LENGTH Activities " + activities.length);
 			done(true);
 		}
 	})
@@ -26,7 +25,6 @@ function isAllreadyInDB(activity, done) {  // CF Clean
 }
 
 function insertActivity(activityItem, done) {
-	//console.log("Activity : "+ JSON.stringify(activityItem));
 	isAllreadyInDB(activityItem, function(isInDB) {
 		if(!isInDB)
 		{
@@ -46,15 +44,15 @@ function insertActivity(activityItem, done) {
 				opening_hours: activityItem.opening_hours,
 			})
 			.then(function(activity) {
-				console.log("SUCCESS ! Activity created with id "+ activity.id);
+				// console.log("SUCCESS ! Activity created with id "+ activity.id);
 				done(activity);
 			})
 			.catch(function(err) {
 				console.error("ERROR ! Activity insertion failed with error " + err.stack);
 				done(null);
 			});
-		}else {
-			console.log("Activity "+activityItem.name+" is already in DataBase");
+		}	else	{
+			// console.log("Activity "+activityItem.name+" is already in DataBase");
 		}
 	});
 	
