@@ -3,54 +3,61 @@ var models = require('../models/index');
 var tagchannel = require('./controller.tagchannel');
 
 
-function isAllreadyInDB(activity) {  // CF Clean
+function isAllreadyInDB(activity, done) {  // CF Clean
 	models.Activity.findAll({
 		where: {
 			idSource:activity.idSource,
-			source: "facebook",
+			source: activity.source,
 		},
 	})
 	.then(function(activities) {
-		if(activities.length == 0 )
-			return true;
-		return false;
+		if(activities.length == 0 )	{
+			done(false);
+		}
+		else	{
+			console.log("LENGTH Activities " + activities.length);
+			done(true);
+		}
 	})
 	.catch(function(err) {
 		console.error("ERROR function: isAllreadyInDB ! finding failed with error " + err.stack);
-		return false;
+		done(true);
 	});
 }
 
 function insertActivity(activityItem, done) {
 	//console.log("Activity : "+ JSON.stringify(activityItem));
-	if(! isAllreadyInDB(activityItem))
-	{
-		models.Activity.create({
-			name: activityItem.name.toLowerCase(),
-			type: activityItem.type,
-			description: activityItem.description ? activityItem.description.toLowerCase() : null,
-			tags: activityItem.tags,
-			address: activityItem.address,
-			latitude: activityItem.latitude,
-			longitude: activityItem.longitude,
-			temporary: activityItem.temporary,
-			date_start: activityItem.date_start,
-			date_end: activityItem.date_end,
-			source: activityItem.source,
-			idSource: activityItem.idSource,
-			opening_hours: activityItem.opening_hours,
-		})
-		.then(function(activity) {
-			console.log("SUCCESS ! Activity created with id "+ activity.id);
-			done(activity);
-		})
-		.catch(function(err) {
-			console.error("ERROR ! Activity insertion failed with error " + err.stack);
-			done(null);
-		});
-	}else {
-		console.log("Activity "+activityItem.name+" is already in DataBase");
-	}
+	isAllreadyInDB(activityItem, function(isInDB) {
+		if(!isInDB)
+		{
+			models.Activity.create({
+				name: activityItem.name.toLowerCase(),
+				type: activityItem.type,
+				description: activityItem.description ? activityItem.description.toLowerCase() : null,
+				tags: activityItem.tags,
+				address: activityItem.address,
+				latitude: activityItem.latitude,
+				longitude: activityItem.longitude,
+				temporary: activityItem.temporary,
+				date_start: activityItem.date_start,
+				date_end: activityItem.date_end,
+				source: activityItem.source,
+				idSource: activityItem.idSource,
+				opening_hours: activityItem.opening_hours,
+			})
+			.then(function(activity) {
+				console.log("SUCCESS ! Activity created with id "+ activity.id);
+				done(activity);
+			})
+			.catch(function(err) {
+				console.error("ERROR ! Activity insertion failed with error " + err.stack);
+				done(null);
+			});
+		}else {
+			console.log("Activity "+activityItem.name+" is already in DataBase");
+		}
+	});
+	
 }
 
 module.exports.insertActivity = insertActivity;
