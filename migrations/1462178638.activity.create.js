@@ -46,11 +46,9 @@ module.exports = {
       },
       source: {
         type:   Sequelize.STRING,
-        primaryKey: true
       },
       idSource: {
         type:   Sequelize.DECIMAL,
-        primaryKey: true
       },
       createdAt: {
         allowNull: false,

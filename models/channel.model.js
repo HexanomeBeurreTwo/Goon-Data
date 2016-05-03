@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Channel.belongsToMany(models.User, {through: 'UserChannel', foreignKey: 'userId' });
-        Channel.belongsToMany(models.Activity, {through: 'ChannelActivity', foreignKey: 'ActivityId', as: "Activities" });
+        Channel.belongsToMany(models.Activity, {through: 'ChannelActivity', foreignKey: 'ChannelId', as: "Activities" });
       }
     }
   });
