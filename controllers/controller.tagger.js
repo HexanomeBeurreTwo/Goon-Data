@@ -91,7 +91,7 @@ function updateTagsActivity(activity)
 		}else {
 			activity.tags = [];
 		}
-		console.log(activity);
+		console.log('['+activity.tags.length+'] tags found for actvity idSource : '+activity.idSource);
 	});
 		
 }    

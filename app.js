@@ -24,7 +24,8 @@ function logActivity(normilizedData)
 	  console.log( JSON.stringify(item) +" \n\n");
 	});
 	
-	console.log( normilizedData.length +" Found." );
+	var founded = (normilizedData)? normilizedData.length:0;
+	console.log( founded +" Found." );
 }
 
 function launchUpdateData(done)
@@ -36,7 +37,7 @@ function launchUpdateData(done)
 		// logActivity(normilizedEvent);
 		insertion.insertAllActivities(normilizedEvent);
 		// insertion.insertActivity(normilizedEvent[0]);
-		console.log('GrandLyon Data Updated at : ' + new Date());
+		console.log('['+normilizedEvent.length+'] GrandLyon Data Updated at : ' + new Date());
 
 		done();
 	});  
@@ -49,7 +50,7 @@ function launchUpdateData(done)
 		// logActivity(normilizedEvent);
 		insertion.insertAllActivities(normilizedEvent);
 		// insertion.insertActivity(normilizedEvent[0]);
-		console.log('Facebook Event Data Updated at : ' + new Date());
+		console.log('['+normilizedEvent.length+'] Facebook Event Data Updated at : ' + new Date());
 
 		done();
 	});

@@ -96,7 +96,7 @@ function getFbEvents(req, onResult) {
           data = JSON.parse(responseBody).data;
 
       //Set venueCount
-      venuesCount = data.length;
+      venuesCount = (data)? data.length : 0;
 
       //Create array of 50 places each
       data.forEach(function(idObj, index, arr) {
@@ -139,7 +139,7 @@ function getFbEvents(req, onResult) {
         var resObj = JSON.parse(resStr);
         Object.getOwnPropertyNames(resObj).forEach(function(venueId, index, array) {
           var venue = resObj[venueId];
-          if (venue.events && venue.events.data.length > 0) {
+          if (venue.events && venue.events.data && venue.events.data.length > 0) {
             venuesWithEvents++;
             venue.events.data.forEach(function(event, index, array) {
               var eventResultObj = {};
@@ -195,10 +195,11 @@ function getFbEvents(req, onResult) {
 	  //console.log("Result:\n" + JSON.stringify(data));
 	  onResult(data);
 	  
-    }).catch(function (e) {
+    })
+ 	.catch(function (e) {
       //res.status(500).send({error: e});
-	  console.log({requestError: e});
-    });  
+	  console.log('!! ERROR file getfacebookdata.getFbEvents ' + e);
+    });   
   }
 
 };

@@ -29,7 +29,7 @@ function getRessourceJson(options,onResult)
 	});
 
 	httpclient.on('error', function(e)  {
-		console.log("Got_error " + e.message);
+		console.log("!! ERROR file 'getgrandlyondata' : " + e.message);
 	});
 
 	httpclient.end();

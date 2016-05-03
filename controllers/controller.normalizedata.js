@@ -30,15 +30,18 @@ function normalizedActivityEventFB(JsonEvents)
 	  activity.temporary = true;
 	  activity.link = item.eventLink;
 	  activity.description = item.eventDescription;
-	  if(activity.description.length > 0)
-	  	tagger.putTags(activity);
-	  if (activity.description.length > maxLength) {
-	  	activity.description = truncate(activity.description);
-	  }
-	  activity.phoneNumber = null;	  
-	  activity.picture = item.eventProfilePicture;
 	  activity.source = "facebook";
 	  activity.idSource = item.eventId;
+	  
+	  if(activity.description && activity.description.length > 0) {
+	  	tagger.putTags(activity);
+	  }
+	  if (activity.description && activity.description.length > maxLength) {
+	  	activity.description = truncate(activity.description);
+	  }
+
+	  activity.phoneNumber = null;	  
+	  activity.picture = item.eventProfilePicture;
 	  activities.push(activity);
 	});
 	return activities;

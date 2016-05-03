@@ -1,7 +1,7 @@
 var models = require('../models/index');
 
 function insertActivity(activityItem) {
-	console.log("Activity : "+ JSON.stringify(activityItem));
+	//console.log("Activity : "+ JSON.stringify(activityItem));
 	models.Activity.create({
 		name: activityItem.name.toLowerCase(),
 		type: activityItem.type,
