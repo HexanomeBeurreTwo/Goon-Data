@@ -66,15 +66,26 @@ function spotlightRequest(input,callback)
 // var input = "President Obama called Wednesday on Congress to extend a tax break for students included in last years economic stimulus package, arguing that the policy provides more generous assistance.";
 // spotlightRequest(input,function(output){console.log(output)});
 
+function compareConfidenceTag(a,b) {
+  if (a['@percentageOfSecondRank'] < b['@percentageOfSecondRank'])
+    return -1;
+  if (a['@percentageOfSecondRank'] > b['@percentageOfSecondRank'])
+    return 1;
+  return 0;
+}
+
 
 function extracte_tags(SpotlightRespense)
 {
 	var tags = [];
 	if (SpotlightRespense.Resources) {
-		SpotlightRespense.Resources.forEach(function(item, index) 
+		//sorte Tags by Confidence 
+		SpotlightRespense.Resources.sort(compareConfidenceTag);
+		for(var i=0; i< SpotlightRespense.Resources.length && i<10 ; i++)
 		{
+			var item = SpotlightRespense.Resources[i];
 			tags.push(item['@surfaceForm']);
-		});
+		}
 	}
 	return tags;
 }
@@ -91,7 +102,7 @@ function updateTagsActivity(activity)
 		}else {
 			activity.tags = [];
 		}
-		console.log('['+activity.tags.length+'] tags found for actvity idSource : '+activity.idSource);
+		console.log('['+activity.tags.length +'] tags found for actvity idSource : '+activity.idSource);
 	});
 		
 }    
