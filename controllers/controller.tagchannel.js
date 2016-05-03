@@ -101,7 +101,7 @@ function applyMatching(channels, activity, threshold)	{
 			console.log( JSON.stringify(channel));
 			insertChannelActivity(activity.id, channel.id, channelScore/channel.tags.length);
 		}	else	{
-			// console.log("[TAG MATCHING] NO association between channel " + channel.name + " and activity " + activity.name + " found.")
+			console.log("[TAG MATCHING] NO association between channel " + channel.name + " and activity " + activity.name + " found.")
 		}
 	});
 }
@@ -136,17 +136,17 @@ function matchingActivity(activity, threshold) {
 
 module.exports.matchingActivity = matchingActivity;
 
-function testChannelTagging() {
-	getActivities(function(activities)	{
-		// console.log("Activities : " + JSON.stringify(activities));
-		matchingActivities(activities, 0.0001);
-	});
+// function testChannelTagging() {
+// 	getActivities(function(activities)	{
+// 		// console.log("Activities : " + JSON.stringify(activities));
+// 		matchingActivities(activities, 0.0001);
+// 	});
 
-	// getActivityById(3, function(activity)	{
-	// 	console.log(JSON.stringify(activity));
-	// 	matchingActivity(activity, 0.0001);
-	// });
-	// console.log(JSON.stringify(getActivityById(2)));
-}
+// 	getActivityById(1, function(activity)	{
+// 		console.log(JSON.stringify(activity));
+// 		matchingActivity(activity, 0.0001);
+// 	});
 
-testChannelTagging();
+// }
+
+// testChannelTagging();

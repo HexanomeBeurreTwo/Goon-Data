@@ -1,6 +1,6 @@
 var tagger = require('./controller.tagger.js');
 
-var maxLength = 255;
+var maxLength = 250;
 
 function formatDate(dateStr)
 // from "2016-05-26T09:00:00+0200" to "2016-05-26 07:00:00"
@@ -36,7 +36,7 @@ function normalizedActivityEventFB(JsonEvents)
 	  if(activity.description && activity.description.length > 0) {
 	  	tagger.putTags(activity);
 	  }
-	  if (activity.description && activity.description.length > maxLength) {
+	  if (activity.description && activity.description.length >= maxLength) {
 	  	activity.description = truncate(activity.description);
 	  }
 
@@ -64,7 +64,7 @@ function normalizedActivityGL(JsonEvents)
 	  activity.temporary = false;
 	  activity.link = item.properties.siteweb;
 	  activity.description = item.properties.type_detail+"\n"+item.properties.tarifsenclair+"\n"+item.properties.ouverture;	
-	  if (activity.description.length > maxLength) {
+	  if (activity.description.length >= maxLength) {
 	  	activity.description = truncate(activity.description);
 	  }
 	  activity.phoneNumber = item.properties.telephone;

@@ -6,6 +6,7 @@ var normalize = require('./controllers/controller.normalizedata.js');
 var insertion = require('./controllers/controller.insert.js');
 var clean = require('./controllers/controller.clean.js');
 var cron = require('./controllers/controller.cron.js');
+var tagchannel = require('./controllers/controller.tagchannel.js');
 
 var endpointsConfig = JSON.parse(fs.readFileSync('endpoints.config.json', 'utf8'));
 
@@ -36,10 +37,9 @@ function launchUpdateData(done)
 
 		// logActivity(normilizedEvent);
 		insertion.insertAllActivities(normilizedEvent);
+
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('['+normilizedEvent.length+'] GrandLyon Data Updated at : ' + new Date());
-
-		done();
 	});  
 
 
@@ -49,10 +49,9 @@ function launchUpdateData(done)
 
 		// logActivity(normilizedEvent);
 		insertion.insertAllActivities(normilizedEvent);
+
 		// insertion.insertActivity(normilizedEvent[0]);
 		console.log('['+normilizedEvent.length+'] Facebook Event Data Updated at : ' + new Date());
-
-		done();
 	});
 }
 

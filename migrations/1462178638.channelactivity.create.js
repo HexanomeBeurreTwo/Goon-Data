@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       match: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       createdAt: {
         allowNull: false,

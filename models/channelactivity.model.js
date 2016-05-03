@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   var ChannelActivity = sequelize.define('ChannelActivity', {
     match: {
-      type: DataTypes.INTEGER
+      type: DataTypes.FLOAT
     },
     ActivityId: {
       type: DataTypes.INTEGER
