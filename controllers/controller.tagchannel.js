@@ -78,11 +78,19 @@ function insertChannelActivity(activityId, channelId, confidence) {
 	})
 }
 
+function includes(str,substr) {
+	return (str.indexOf(substr) > -1) ;
+}
+
 function matchTags(tagOne, tagTwo) {
 	// TODO: Semantic match between words instead of strict string match
-
 	// Calculate % of matching
-	return tagOne.toLowerCase() == tagTwo.toLowerCase();
+	var tag1 = tagOne.toLowerCase(),
+		tag2 = tagTwo.toLowerCase();
+	var res = (tag1 == tag2 ) ; 
+		res = res || ( includes(tag1,tag2)) ; 
+		res = res || ( includes(tag2,tag1));
+	return res;
 }
 
 function applyMatching(channels, activity, threshold)	{
@@ -155,3 +163,8 @@ module.exports.matchingActivity = matchingActivity;
 // }
 
 // testChannelTagging();
+
+// var tagOne = "Hello world, wElcome tO the universe.",
+	// tagTwo = "welCOME";
+// console.log( matchTags(tagOne, tagTwo) );
+// console.log( matchTags(tagTwo,tagOne) );
