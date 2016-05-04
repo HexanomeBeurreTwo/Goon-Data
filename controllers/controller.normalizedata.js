@@ -40,7 +40,7 @@ function normalizedActivityEventFB(JsonEvents, callback)
 		if(activity.description && activity.description.length > 0) {
 			tagger.putTags(activity, function(err, result) {
 				activity = result;
-				console.log("[RESULT]" + result);
+				// console.log("[RESULT]" + result);
 				if (activity.description && activity.description.length >= maxLength) {
 					activity.description = truncate(activity.description);
 				}
@@ -87,6 +87,35 @@ function normalizedActivityGL(JsonEvents, callback)
 	  activities.push(activity);
 	});
 	callback(activities);
+
+	// var activities = [];
+	// async.each(JsonEvents.events, function(item, eachcallback) {
+	// 	var activity = {};//activityModel;
+	// 	activity.name = item.properties.nom;
+	// 	activity.type = item.properties.type;
+	// 	activity.tags = item.properties.type_detail.split(' ');
+	// 	activity.adress = item.properties.adresse + " " + item.properties.codepostal + " " + item.properties.codepostal + " " + item.properties.commune  ; 
+	// 	activity.latitude = item.geometry.coordinates[1];
+	// 	activity.longitude = item.geometry.coordinates[0];
+	// 	activity.date_start = null ;
+	// 	activity.date_end = null;
+	// 	activity.continous = true;
+	// 	activity.temporary = false;
+	// 	activity.link = item.properties.siteweb;
+	// 	activity.description = item.properties.type_detail+"\n"+item.properties.tarifsenclair+"\n"+item.properties.ouverture;	
+	// 	if (activity.description.length >= maxLength) {
+	// 		activity.description = truncate(activity.description);
+	// 	}
+	// 	activity.phoneNumber = item.properties.telephone;
+	// 	activity.picture = null;
+	// 	activity.source = "grandlyon";
+	// 	activity.idSource = item.properties.id;
+	// 	activities.push(activity);
+	// 	eachcallback();
+	// },function(err)	{
+	// 	console.log("[ACTIVITIES DONE] : length " + activities.length);	
+	// 	callback(activities);
+	// });
 }
 
 module.exports.normalizedActivityGL = normalizedActivityGL;

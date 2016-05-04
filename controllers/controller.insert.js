@@ -25,7 +25,7 @@ function isAllreadyInDB(activity, done) {  // CF Clean
 }
 
 function insertActivity(activityItem, done) {
-	console.log("[TAGS]: " + activityItem.tags);
+	// console.log("[TAGS]: " + activityItem.tags);
 	isAllreadyInDB(activityItem, function(isInDB) {
 		if(!isInDB)
 		{
@@ -64,7 +64,7 @@ module.exports.insertActivity = insertActivity;
 
 function insertAllActivities(data, callback) {
 	async.each(data, function(item, callback) {
-		console.log("[ITEM] " + JSON.stringify(item));
+		// console.log("[ITEM] " + JSON.stringify(item));
 		insertActivity(item, function(activity)	{
 			if (activity) {
 				tagchannel.matchingActivity(activity, 0.0001);

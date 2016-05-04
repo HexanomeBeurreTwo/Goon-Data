@@ -40,20 +40,6 @@ function getChannels(done) {
 }
 
 function insertChannelActivity(activityId, channelId, confidence) {
-	// models.ChannelActivity.create({
-	// 	ActivityId: activityItem.name.toLowerCase(),
-	// 	ChannelId: activityItem.type,
-	// })
-	// .then(function(activity) {
-	// 	console.log("SUCCESS ! Activity created with id "+ activity.id);
-	// 	return true;
-	// })
-	// .catch(function(err) {
-	// 	console.error("ERROR ! Activity insertion failed with error " + err.stack);
-	// 	return false;
-	// });
-	// console.log("Channel id " + channelId);
-	// console.log("Activity id " + activityId);
 	Promise.all([
 	    models.Channel.findOne({where: {id: channelId}}),
 	    models.Activity.findOne({where: {id: activityId}})
@@ -61,7 +47,6 @@ function insertChannelActivity(activityId, channelId, confidence) {
 	.then(function (results) {
 		var channel = results[0];
 		var activity = results[1];
-		console.log("#YOOOOOOOO");
 		channel.addActivity(activity, {match: confidence})
 		//activity.addChannel(channel, {match: confidence})
 		.then(function (success) {

@@ -35,7 +35,7 @@ function launchUpdateData(done)
 	{
 		normalize.normalizedActivityGL(data, function(activities) {
 			// logActivity(normilizedEvent);
-			console.log("[AFTER NORMALIZATION] activities " + JSON.stringify(activities));
+			// console.log("[AFTER NORMALIZATION] activities " + JSON.stringify(activities));
 			insertion.insertAllActivities(activities, function() {
 				console.log('['+activities.length+'] GrandLyon Data Updated at : ' + new Date());
 			});
@@ -47,7 +47,7 @@ function launchUpdateData(done)
 	{
 		normalize.normalizedActivityEventFB(data, function(activities) {
 			// logActivity(normilizedEvent);
-			console.log("[AFTER NORMALIZATION] activities " + JSON.stringify(activities));
+			// console.log("[AFTER NORMALIZATION] activities " + JSON.stringify(activities));
 			insertion.insertAllActivities(activities, function() {
 				console.log('['+activities.length+'] Facebook Event Data Updated at : ' + new Date());
 			});
@@ -59,7 +59,7 @@ function launchUpdateData(done)
 function main() {
 	launchUpdateData(function()
 	{
-		console.log("Notify Goon Server ?");
+		console.log("Notify Goon Server Provisionning began ?");
 		return;
 	});
 	clean.cleanOldFacebookActivities();
