@@ -1,4 +1,5 @@
 var tagger = require('./controller.tagger.js');
+var async = require('async');
 
 var maxLength = 250;
 
@@ -12,42 +13,54 @@ function formatDate(dateStr)
 }
 
 
-function normalizedActivityEventFB(JsonEvents)
+function normalizedActivityEventFB(JsonEvents, callback)
 {
 	var activities = [];
-	JsonEvents.events.forEach(function(item, index) {
-	  var activity = {};//activityModel;
-	  activity.name = item.eventName;
-	  activity.type = "EVENT" ;
-	  //activity.tags = [];
-	  activity.adress = item.venueLocation.street + " " + item.venueLocation.street + " " + item.venueLocation.city + " " + item.venueLocation.zip + " " + item.venueLocation.country ; 
-	  activity.latitude = item.venueLocation.latitude;
-	  activity.longitude = item.venueLocation.longitude;
-	  activity.date_start = formatDate(item.eventStarttime); 
-	  var date_end= new Date(new Date(item.eventStarttime).getTime() + 24*3600*1000); // plus one day
-	  activity.date_end = formatDate(date_end);
-	  activity.continous = false;
-	  activity.temporary = true;
-	  activity.link = item.eventLink;
-	  activity.description = item.eventDescription;
-	  activity.source = "facebook";
-	  activity.idSource = item.eventId;
-	  
-	  if(activity.description && activity.description.length > 0) {
-	  	tagger.putTags(activity);
-	  }
-	  if (activity.description && activity.description.length >= maxLength) {
-	  	activity.description = truncate(activity.description);
-	  }
 
-	  activity.phoneNumber = null;	  
-	  activity.picture = item.eventProfilePicture;
-	  activities.push(activity);
-	});
-	return activities;
+	async.each(JsonEvents.events, function(item, eachcallback) {
+		var activity = {};//activityModel;
+		activity.name = item.eventName;
+		activity.type = "EVENT" ;
+		//activity.tags = [];
+		activity.adress = item.venueLocation.street + " " + item.venueLocation.street + " " + item.venueLocation.city + " " + item.venueLocation.zip + " " + item.venueLocation.country ; 
+		activity.latitude = item.venueLocation.latitude;
+		activity.longitude = item.venueLocation.longitude;
+		activity.date_start = formatDate(item.eventStarttime); 
+		var date_end= new Date(new Date(item.eventStarttime).getTime() + 24*3600*1000); // plus one day
+		activity.date_end = formatDate(date_end);
+		activity.continous = false;
+		activity.temporary = true;
+		activity.link = item.eventLink;
+		activity.description = item.eventDescription;
+		activity.source = "facebook";
+		activity.idSource = item.eventId;
+
+		activity.phoneNumber = null;	  
+		activity.picture = item.eventProfilePicture;
+		if(activity.description && activity.description.length > 0) {
+			tagger.putTags(activity, function(err, result) {
+				activity = result;
+				console.log("[RESULT]" + result);
+				if (activity.description && activity.description.length >= maxLength) {
+					activity.description = truncate(activity.description);
+				}
+				activities.push(activity);
+				eachcallback();
+			});
+		}	else	{
+			activities.push(activity);
+			eachcallback();
+		}
+		
+	},function(err)	{
+		console.log("[ACTIVITIES DONE] : length " + activities.length);	
+		callback(activities);
+	});	
 }
 
-function normalizedActivityGL(JsonEvents)
+module.exports.normalizedActivityEventFB = normalizedActivityEventFB;
+
+function normalizedActivityGL(JsonEvents, callback)
 {
 	var activities = [];
 	JsonEvents.features.forEach(function(item, index) {
@@ -73,8 +86,11 @@ function normalizedActivityGL(JsonEvents)
 	  activity.idSource = item.properties.id;
 	  activities.push(activity);
 	});
-	return activities;
+	callback(activities);
 }
+
+module.exports.normalizedActivityGL = normalizedActivityGL;
+
 
 function truncate(trunc) {
 	/* Truncate the content of the descritpion, then go back to the end of the
@@ -86,8 +102,6 @@ function truncate(trunc) {
     trunc += '...';
     return trunc;
 }
- 
-module.exports = [normalizedActivityGL,normalizedActivityEventFB];
 
 
 

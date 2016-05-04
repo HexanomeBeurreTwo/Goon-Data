@@ -90,7 +90,7 @@ function getFbEvents(req, onResult) {
 		
     //Get places as specified
     rp.get(placeUrl).then(function(responseBody) {
-
+      // console.log("[BODY] : "+ JSON.stringify(responseBody));
       var ids = [],
           tempArray = [],
           data = JSON.parse(responseBody).data;
@@ -196,7 +196,7 @@ function getFbEvents(req, onResult) {
 	  onResult(data);
 	  
     })
- 	.catch(function (e) {
+ 	  .catch(function (e) {
       //res.status(500).send({error: e});
 	  console.error('!! ERROR file getfacebookdata.getFbEvents ' + e);
     });   

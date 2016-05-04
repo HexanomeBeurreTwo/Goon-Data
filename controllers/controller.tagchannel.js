@@ -99,11 +99,11 @@ function applyMatching(channels, activity, threshold)	{
 			});
 			if (channelScore/channel.tags.length >= threshold) {
 				console.log("[TAG MATCHING] Association between channel " + channel.name + " and activity " + activity.name + " found.");
-				console.log( JSON.stringify(activity));
-				console.log( JSON.stringify(channel));
+				// console.log( JSON.stringify(activity));
+				// console.log( JSON.stringify(channel));
 				insertChannelActivity(activity.id, channel.id, channelScore/channel.tags.length);
 			}	else	{
-				console.log("[TAG MATCHING] NO association between channel " + channel.name + " and activity " + activity.name + " found.")
+				// console.log("[TAG MATCHING] NO association between channel " + channel.name + " and activity " + activity.name + " found.")
 			}
 		}	else	{
 			console.warn("Channel[" + channel.id + "] " + channel.name + " do not have tags");

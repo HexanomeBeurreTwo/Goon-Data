@@ -75,7 +75,7 @@ function compareConfidenceTag(a,b) {
 }
 
 
-function extracte_tags(SpotlightRespense)
+function extracte_tags(SpotlightRespense, callback)
 {
 	var tags = [];
 	if (SpotlightRespense.Resources) {
@@ -87,25 +87,27 @@ function extracte_tags(SpotlightRespense)
 			tags.push(item['@surfaceForm']);
 		}
 	}
-	return tags;
+	callback(tags);
 }
 
-function updateTagsActivity(activity)
+function updateTagsActivity(activity, callback)
 {	
 	//activity.description
 	//activity.tags
 	spotlightRequest(activity.description,function(SpotlightOutput)
 	{
-		if(!SpotlightOutput.error)
-		{
-			activity.tags =  extracte_tags(SpotlightOutput.response);
-		}else {
-			activity.tags = [];
-		}
-		console.log('['+activity.tags.length +'] tags found for actvity idSource : '+activity.idSource);
+		extracte_tags(SpotlightOutput.response, function(tags) {
+			if(!SpotlightOutput.error)
+			{
+				activity.tags = tags;
+			}	else	{
+				activity.tags = [];
+			}
+			console.log('['+activity.tags.length +'] tags found for activity idSource : '+activity.idSource);
+			callback(null, activity);
+		});
 	});
-		
-}    
+}
 
 
 // TEST
@@ -116,6 +118,6 @@ function updateTagsActivity(activity)
 // }
 // updateTagsActivity(actvity);
 
-module.exports = {putTags:updateTagsActivity};
+module.exports.putTags = updateTagsActivity;
 
 

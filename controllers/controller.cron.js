@@ -4,7 +4,7 @@ var job = null;
 
 function cronJob(activate, done) {
 	if (activate) {
-		job = new CronJob('*/10 * * * * *', function() {
+		job = new CronJob('* */30 * * * *', function() {
 		  /* runs once at the specified date. */
 			done();
 

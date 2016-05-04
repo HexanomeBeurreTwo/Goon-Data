@@ -33,25 +33,25 @@ function launchUpdateData(done)
 {
 	getGrandLyondata(grandsLyonEndPoint, function(statusCode,data)
 	{
-		var normilizedEvent = normalize[0](data);
-
-		// logActivity(normilizedEvent);
-		insertion.insertAllActivities(normilizedEvent);
-
-		// insertion.insertActivity(normilizedEvent[0]);
-		console.log('['+normilizedEvent.length+'] GrandLyon Data Updated at : ' + new Date());
+		normalize.normalizedActivityGL(data, function(activities) {
+			// logActivity(normilizedEvent);
+			console.log("[AFTER NORMALIZATION] activities " + JSON.stringify(activities));
+			insertion.insertAllActivities(activities, function() {
+				console.log('['+activities.length+'] GrandLyon Data Updated at : ' + new Date());
+			});
+		});
 	});  
 
 
 	getFacebookEventsData(fbEndPoint,function(data)
 	{
-		var normilizedEvent = normalize[1](data);
-
-		// logActivity(normilizedEvent);
-		insertion.insertAllActivities(normilizedEvent);
-
-		// insertion.insertActivity(normilizedEvent[0]);
-		console.log('['+normilizedEvent.length+'] Facebook Event Data Updated at : ' + new Date());
+		normalize.normalizedActivityEventFB(data, function(activities) {
+			// logActivity(normilizedEvent);
+			console.log("[AFTER NORMALIZATION] activities " + JSON.stringify(activities));
+			insertion.insertAllActivities(activities, function() {
+				console.log('['+activities.length+'] Facebook Event Data Updated at : ' + new Date());
+			});
+		});
 	});
 	done();
 }
@@ -68,4 +68,4 @@ function main() {
 main();
 
 // Replace with true for cron job
-cron.cronJob(false, main);
+cron.cronJob(true, main);

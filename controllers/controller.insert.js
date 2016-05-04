@@ -1,7 +1,7 @@
 
 var models = require('../models/index');
 var tagchannel = require('./controller.tagchannel');
-
+var async = require('async');
 
 function isAllreadyInDB(activity, done) {  // CF Clean
 	models.Activity.findAll({
@@ -25,6 +25,7 @@ function isAllreadyInDB(activity, done) {  // CF Clean
 }
 
 function insertActivity(activityItem, done) {
+	console.log("[TAGS]: " + activityItem.tags);
 	isAllreadyInDB(activityItem, function(isInDB) {
 		if(!isInDB)
 		{
@@ -53,6 +54,7 @@ function insertActivity(activityItem, done) {
 			});
 		}	else	{
 			// console.log("Activity "+activityItem.name+" is already in DataBase");
+			done(null);
 		}
 	});
 	
@@ -60,17 +62,20 @@ function insertActivity(activityItem, done) {
 
 module.exports.insertActivity = insertActivity;
 
-function insertAllActivities(data) {
-	data.forEach(function(item, index) {
+function insertAllActivities(data, callback) {
+	async.each(data, function(item, callback) {
+		console.log("[ITEM] " + JSON.stringify(item));
 		insertActivity(item, function(activity)	{
 			if (activity) {
 				tagchannel.matchingActivity(activity, 0.0001);
 			}	else	{
 				console.error("Activity is null so insertion failed");
 			}
+			callback();
 		});
+	}, function(err)	{
+		callback();
 	});
-	return;
 }
 
 module.exports.insertAllActivities = insertAllActivities;
